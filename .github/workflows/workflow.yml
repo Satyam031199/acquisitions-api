@@ -57,6 +57,7 @@ jobs:
         run: npm ci
 
       - name: Run Tests with Coverage
+        id: test-runner
         run: npm run test
         env:
           NODE_ENV: test
@@ -80,7 +81,7 @@ jobs:
         if: always()
         run: |
           echo "## Test Results 🧪" >> $GITHUB_STEP_SUMMARY
-          if [ "${{ steps.tests.outcome }}" == "success" ]; then
+          if [ "${{ steps.test-runner.outcome }}" == "success" ]; then
             echo "✅ All tests passed successfully!" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "### Coverage Status" >> $GITHUB_STEP_SUMMARY
