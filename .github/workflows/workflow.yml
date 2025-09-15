@@ -1,9 +1,9 @@
 name: workflow.yml
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   lint-and-format:
@@ -24,10 +24,10 @@ jobs:
 
       - name: Run ESLint
         run: |
-          echo "::Running ESLint::"
+          echo "::notice::Running ESLint"
           if ! npm run lint; then
             echo "::error::ESLint found errors"
-            echo "::fix::Run 'npm run lint:fix' to fix them"
+            echo "::notice::Run 'npm run lint:fix' to fix them"
             exit 1
           fi
 
@@ -36,6 +36,6 @@ jobs:
           echo "::Running Prettier::"
           if ! npm run format:check; then
             echo "::error::Prettier found errors"
-            echo "::fix::Run 'npm run format' to fix them"
+            echo "::notice::Run 'npm run format' to fix them"
             exit 1
           fi
