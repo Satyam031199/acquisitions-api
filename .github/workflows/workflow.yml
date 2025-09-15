@@ -40,7 +40,6 @@ jobs:
             exit 1
           fi
 
-
   tests:
     name: Tests
     runs-on: ubuntu-latest
@@ -59,6 +58,12 @@ jobs:
 
       - name: Run Tests with Coverage
         run: npm run test
+        env:
+          NODE_ENV: test
+          NODE_OPTIONS: --experimental-vm-modules
+          DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
+          JWT_SECRET: test-secret-for-ci
+          LOG_LEVEL: error
 
       - name: Upload coverage reports
         if: always()
@@ -89,7 +94,7 @@ jobs:
             echo "3. Run \`npm test\` locally to verify fixes" >> $GITHUB_STEP_SUMMARY
             echo "4. Commit and push your changes" >> $GITHUB_STEP_SUMMARY
           fi
-          
+
       - name: Annotate test failures
         if: failure()
         run: |
