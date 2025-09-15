@@ -37,7 +37,7 @@ const securityMiddleware = async (req, res, next) => {
         }
         next();
     } catch (error) {
-        logger.error("Security middleware error", error);
+        logger.error("Arcjet Security middleware error", error);
         res.status(500).json({ error: "Internal server error", message: 'Something went wrong with security middleware' });
     }
 };

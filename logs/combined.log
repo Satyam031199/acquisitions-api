@@ -37,3 +37,16 @@
 {"level":"info","message":"::1 - - [14/Sep/2025:14:36:59 +0000] \"GET /health HTTP/1.1\" 429 51 \"-\" \"HTTPie\"","service":"acquisitions-api"}
 {"ip":"::1","level":"warn","message":"Rate limit exceeded","path":"/health","service":"acquisitions-api","userAgent":"HTTPie"}
 {"level":"info","message":"::1 - - [14/Sep/2025:14:36:59 +0000] \"GET /health HTTP/1.1\" 429 51 \"-\" \"HTTPie\"","service":"acquisitions-api"}
+{"level":"info","message":"::1 - - [15/Sep/2025:05:47:03 +0000] \"GET /api/users/2 HTTP/1.1\" 401 72 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36\"","service":"acquisitions-api"}
+{"level":"info","message":"::1 - - [15/Sep/2025:05:47:04 +0000] \"GET /favicon.ico HTTP/1.1\" 404 150 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36\"","service":"acquisitions-api"}
+{"level":"info","message":"User satyamchaturvedi22289@gmail.com authenticated successfully","service":"acquisitions-api"}
+{"level":"info","message":"User signed in successfully: satyamchaturvedi22289@gmail.com","service":"acquisitions-api"}
+{"level":"info","message":"::1 - - [15/Sep/2025:05:48:00 +0000] \"POST /api/auth/sign-in HTTP/1.1\" 200 140 \"-\" \"HTTPie\"","service":"acquisitions-api"}
+{"level":"info","message":"::1 - - [15/Sep/2025:05:49:04 +0000] \"GET /api/users/2 HTTP/1.1\" 401 72 \"-\" \"HTTPie\"","service":"acquisitions-api"}
+{"level":"info","message":"User authenticated: satyamchaturvedi22289@gmail.com (user)","service":"acquisitions-api"}
+{"level":"info","message":"Getting user by id: 2","service":"acquisitions-api"}
+{"level":"info","message":"User satyamchaturvedi22289@gmail.com retrieved successfully","service":"acquisitions-api"}
+{"level":"info","message":"::1 - - [15/Sep/2025:05:49:25 +0000] \"GET /api/users/2 HTTP/1.1\" 200 220 \"-\" \"HTTPie\"","service":"acquisitions-api"}
+{"level":"info","message":"User authenticated: satyamchaturvedi22289@gmail.com (user)","service":"acquisitions-api"}
+{"level":"warn","message":"Access denied for user satyamchaturvedi22289@gmail.com with role user. Required: admin","service":"acquisitions-api"}
+{"level":"info","message":"::1 - - [15/Sep/2025:05:49:46 +0000] \"DELETE /api/users/2 HTTP/1.1\" 403 62 \"-\" \"HTTPie\"","service":"acquisitions-api"}
