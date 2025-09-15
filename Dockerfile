@@ -1,42 +1,42 @@
-# syntax=docker/dockerfile:1.7
+# Multi-stage Dockerfile for Node.js acquisitions application
 
-# --- Base image for running and building ---
-FROM node:20-alpine AS base
+# Base image with Node.js
+FROM node:18-alpine AS base
 
 # Set working directory
 WORKDIR /app
 
-# Set production environment by default
-ENV NODE_ENV=production \
-    PORT=3000
-
-# Use a non-root user for security
-RUN addgroup -g 1001 -S nodejs && adduser -S node -u 1001 -G nodejs
-
-# --- Dependencies layer ---
-FROM base AS deps
-
-# Install dependencies using a clean, reproducible install
+# Copy package files
 COPY package*.json ./
-RUN npm ci --omit=dev
 
-# --- Production image ---
-FROM base AS runner
+# Install dependencies
+RUN npm ci --only=production && npm cache clean --force
 
-# Copy dependency tree
-COPY --from=deps /app/node_modules ./node_modules
-
-# Copy application source
+# Copy source code
 COPY . .
 
-# Expose app port
+# Create non-root user for security
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001
+
+# Change ownership of the app directory
+RUN chown -R nodejs:nodejs /app
+USER nodejs
+
+# Expose the port
 EXPOSE 3000
 
-# Healthcheck hitting the built-in /health endpoint
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD wget -qO- http://127.0.0.1:${PORT}/health || exit 1
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD node -e "require('http').get('http://localhost:3000/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) }).on('error', () => { process.exit(1) })"
 
-# Switch to non-root user
-USER node
+# Development stage
+FROM base AS development
+USER root
+RUN npm ci && npm cache clean --force
+USER nodejs
+CMD ["npm", "run", "dev"]
 
+# Production stage
+FROM base AS production
 CMD ["npm", "start"]
