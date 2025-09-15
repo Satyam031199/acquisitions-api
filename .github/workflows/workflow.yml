@@ -1,0 +1,41 @@
+name: workflow.yml
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint-and-format:
+    name: Lint and Format Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: |
+          echo "::Running ESLint::"
+          if ! npm run lint; then
+            echo "::error::ESLint found errors"
+            echo "::fix::Run 'npm run lint:fix' to fix them"
+            exit 1
+          fi
+
+      - name: Run Prettier
+        run: |
+          echo "::Running Prettier::"
+          if ! npm run format:check; then
+            echo "::error::Prettier found errors"
+            echo "::fix::Run 'npm run format' to fix them"
+            exit 1
+          fi
